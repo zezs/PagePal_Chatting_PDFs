@@ -4,7 +4,7 @@ The MultiPDF Chat App is a Python application designed for conversing with multi
 
 
 ## Project Workflow
-https://github.com/zezs/PagePal_Chatting_PDFs/blob/main/project_workflow.png
+![MultiPDF Chat App](project_workflow.png)
 
 ## Steps it follows
 
