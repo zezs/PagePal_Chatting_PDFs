@@ -53,6 +53,10 @@ def get_conversation_chain(vectorstore):
     return conversation_chain
 
 
+def handle_userinput(user_question):
+    response = st.session_state.conversation({'question': user_question})
+    st.write(response)
+
 def main():
     load_dotenv()
     st.set_page_config(page_title="PagePal: Chat with multiple PDFs", page_icon=":books:")
@@ -63,7 +67,9 @@ def main():
         st.session_state.conversation = None
 
     st.header("PagePal: Chat with multiple PDFs :books:")
-    st.text_input("Ask a question about your documents:")
+    user_question = st.text_input("Ask a question about your documnets:")
+    if user_question:
+        handle_userinput(user_question)
 
 
     st.write(user_template.replace("{{MSG}}", "Hello Robot"), unsafe_allow_html=True)
