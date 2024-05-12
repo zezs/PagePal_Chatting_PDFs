@@ -55,7 +55,16 @@ def get_conversation_chain(vectorstore):
 
 def handle_userinput(user_question):
     response = st.session_state.conversation({'question': user_question})
-    st.write(response)
+    st.session_state.chat_history = response['chat_history']
+
+    for i, message in enumerate(st.session_state.chat_history):
+        if i % 2==0:
+            st.write(user_template.replace("{{MSG}}", message.content), unsafe_allow_html=True)
+        else:
+            st.write(bot_template.replace("{{MSG}}", message.content), unsafe_allow_html=True)
+
+
+    # st.write(response)
 
 def main():
     load_dotenv()
@@ -66,28 +75,43 @@ def main():
     if "conversation" not in st.session_state:
         st.session_state.conversation = None
 
+    if "chat_history" not in st.session_state:
+        st.session_state.chat_history = None
+
+
     st.header("PagePal: Chat with multiple PDFs :books:")
-    user_question = st.text_input("Ask a question about your documnets:")
+    user_question = st.text_input("Ask a question about your documnets(PRESS RETURN):")
     if user_question:
         handle_userinput(user_question)
 
 
-    st.write(user_template.replace("{{MSG}}", "Hello Robot"), unsafe_allow_html=True)
-    st.write(bot_template.replace("{{MSG}}", "Hello Human"), unsafe_allow_html=True)
+    st.write(user_template.replace("{{MSG}}", "Hello, Robot!!"), unsafe_allow_html=True)
+    st.write(bot_template.replace("{{MSG}}", "Hello, Human! Ask me anything related to PDF files you uploaded."), unsafe_allow_html=True)
 
     with st.sidebar:
+
+           # instruction
+        st.write("---INSTRUCTIONS---")
+        st.write("1. Upload the documets in the side bar")
+        st.write("   - Click Browse")
+        st.write("   - Upload Multiple Documents")
+        st.write("2. Click 'Process' Button")
+        st.write("3. Ask question to the bot in the main window")
+        st.write("----------------------------------------------")
+
         st.subheader("Your documents")
         pdf_docs = st.file_uploader("Upload your PDFs here and click on 'Process'", accept_multiple_files=True)
-        
+
+    
         if st.button("Process"):
             with st.spinner("Processing"):
                 # get pdf
                 raw_text = get_pdf_text(pdf_docs)
-                st.write(raw_text)
+                # st.write(raw_text)
 
                 # get the text chunks
                 text_chunks = get_text_chunks(raw_text)
-                st.write(text_chunks)
+                # st.write(text_chunks)
 
                 #create vector store
                 vectorstore = get_vectorstore(text_chunks)
@@ -98,6 +122,10 @@ def main():
                 # session state also makes a varibale global
                 st.session_state.conversation = get_conversation_chain(vectorstore)
         
+
+        
+     
+
 
 
 if __name__ =='__main__':
