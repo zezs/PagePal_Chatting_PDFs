@@ -3,6 +3,7 @@ pypdf2
 langchain
 openai
 langchain-openai
+angchain-community
 langchain-text-splitters
 python-dotenv
 faiss-cpu 
