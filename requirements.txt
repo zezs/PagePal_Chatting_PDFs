@@ -3,6 +3,7 @@ pypdf2
 langchain
 openai
 langchain-openai
+langchain-text-splitters
 python-dotenv
 faiss-cpu 
 huggingface_hub
