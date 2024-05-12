@@ -2,6 +2,10 @@
 
 The MultiPDF Chat App is a Python application designed for conversing with multiple PDF documents simultaneously. By leveraging natural language processing, users can inquire about the contents of the PDFs and receive relevant responses. It utilizes a language model to ensure accuracy in answering queries, restricting responses to information within the loaded PDFs.
 
+
+## Project Workflow
+https://github.com/zezs/PagePal_Chatting_PDFs/blob/main/project_workflow.png
+
 ## Steps it follows
 
 ### 1. PDF Loading
